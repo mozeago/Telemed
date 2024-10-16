@@ -1,6 +1,7 @@
 
 require('module-alias/register');
 require('dotenv').config()
+const mysql = require('mysq');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
