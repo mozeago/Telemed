@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
-  },
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "sync": "browser-sync start --proxy 'http://localhost:3000' --files 'views/**/*.*' 'public/**/*.*'",
+    "dev:custom": "PORT=3001 concurrently \"nodemon ./bin/www\" \"browser-sync start --proxy 'http://localhost:3001' --files 'views/**/*.*' 'public/**/*.*'\""
+}
+,
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -21,7 +25,10 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/mysql": "^2.15.26",
-    "@types/node": "^22.7.5"
+    "@types/node": "^22.7.5",
+    "browser-sync": "^3.0.3",
+    "concurrently": "^9.0.1",
+    "nodemon": "^3.1.7"
   },
   "_moduleAliases": {
     "@routes": "routes",
