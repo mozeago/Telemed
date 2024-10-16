@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "commonjs",
+		"baseUrl": ".",
+		"paths": {
+			"@routes/*": ["routes/*"],
+			"@views/*": ["views/*"],
+			"@models/*": ["models/*"]
+		}
+	},
+	"exclude": ["node_modules"]
+}

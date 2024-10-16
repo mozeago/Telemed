@@ -10,7 +10,17 @@
     "debug": "~2.6.9",
     "express": "^4.21.1",
     "http-errors": "~1.6.3",
+    "module-alias": "^2.2.3",
     "morgan": "~1.9.1",
     "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.5"
+  },
+  "_moduleAliases": {
+    "@routes": "routes",
+    "@views": "views",
+    "@models": "models"
   }
 }
