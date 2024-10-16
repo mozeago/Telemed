@@ -1,0 +1,61 @@
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Build directories
+dist/
+build/
+coverage/
+
+# Temporary files
+temp/
+tmp/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# Test output
+test/
+__tests__/
+
+# Local database files
+*.sqlite
+*.db
+
+# Custom settings for telemed app (if any)
+*.bak
+*.orig
+
+# Ignore generated documentation
+docs/
+
+# Ignore coverage reports
+coverage/
+
+# Ignore package-lock.json if you are using Yarn
+# package-lock.json
+
+# Ignore other configuration files (if any)
+*.local
+
+# Ignore SSL certificates (if any)
+*.crt
+*.key
