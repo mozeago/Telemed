@@ -5,9 +5,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const pool = require('database/db');
 const indexRouter = require('@routes/index');
 const usersRouter = require('@routes/users');
 const app = express();
+const { log, logError } = require('logs/logger');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,5 +38,34 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+// Gracefully close pool when the application shuts down
+const gracefulShutdown = () => {
+  log('Shutting down the application...');
+  pool.end((err) => {
+    if (err) {
+      logError('Error closing the database pool:', err);
+    } else {
+      log('Database pool closed.');
+    }
+    process.exit(err ? 1 : 0);
+  });
+};
+
+// Handle SIGINT (Ctrl+C) for graceful shutdown
+process.on('SIGINT', gracefulShutdown);
+
+// Handle SIGTERM for shutdown (often used in production environments)
+process.on('SIGTERM', gracefulShutdown);
+
+// Handle uncaught exceptions or unhandled promise rejections
+process.on('uncaughtException', (error) => {
+  logError('Uncaught exception:', error);
+  gracefulShutdown();
+});
+
+process.on('unhandledRejection', (error) => {
+  logError('Unhandled promise rejection:', error);
+  gracefulShutdown();
 });
 module.exports = app;

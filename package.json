@@ -33,6 +33,8 @@
   "_moduleAliases": {
     "@routes": "routes",
     "@views": "views",
-    "@models": "models"
+    "@models": "models",
+    "database": "./database",
+    "logs":"utils"
   }
 }
