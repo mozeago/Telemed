@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-router.post('/register', (request, response) => {
+router.post('/register', (req, res) => {
 
 });
-router.post('/login', (request, response) => {
+router.post('/login', (req, res) => {
 
 });
 router.post('/logout', (request, response){
