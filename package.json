@@ -9,11 +9,14 @@
     "dev:custom": "PORT=3001 concurrently \"nodemon ./bin/www\" \"browser-sync start --proxy 'http://localhost:3001' --files 'views/**/*.*' 'public/**/*.*'\""
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "google-libphonenumber": "^3.2.38",
     "http-errors": "~1.6.3",
     "module-alias": "^2.2.3",
     "morgan": "~1.9.1",

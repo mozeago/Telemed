@@ -1,0 +1,46 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title User Details
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
+      .container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #333;
+      }
+      p {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+  body
+    .container
+      h2 User Registration Details
+      p
+        strong First Name:
+        | #{first_name}
+      p
+        strong Last Name:
+        | #{last_name}
+      p
+        strong Email:
+        | #{email}
+      p
+        strong Phone:
+        | #{phone}
+      p
+        strong Date of Birth:
+        | #{date_of_birth}
+      p
+        strong Gender:
+        | #{gender}
