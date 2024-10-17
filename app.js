@@ -8,6 +8,7 @@ const logger = require('morgan');
 const pool = require('database/db');
 const indexRouter = require('@routes/index');
 const usersRouter = require('@routes/users');
+const authRouter = require('@routes/authRoutes');
 const app = express();
 const { log, logError } = require('logs/logger');
 
