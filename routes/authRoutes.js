@@ -7,7 +7,7 @@ const { log, logError } = require('../utils/logger');
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 const PNF = require('google-libphonenumber').PhoneNumberFormat;
 const { check, validationResult } = require('express-validator');
-const { render } = require('app');
+const { render } = require('../app');
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
@@ -71,24 +71,51 @@ router.get('/login', (req, res) => {
 });
 router.post('/login', [
     check('email').notEmpty().isEmail().withMessage('Please provide valid email'),
-    check('password').notEmpty().isPassword().withMessage('Please provide your account password')
+    check('password').notEmpty().withMessage('Please provide your account password')
 ], async (req, res) => {
-    const { email, password } = res.body;
+    const { email, password } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).render('auth/login', {
             errors: errors.array(),
-            email: res.body.email
+            email: req.body.email
         });
     }
     try {
-
+        const [userInformation] = await pool.query('SELECT email,password_hash FROM patients WHERE email=?', [email]);
+        if (userInformation.length === 0) {
+            res.status(400).render('auth/login', {
+                errors: [{ msg: 'No user Invalid email or password' }],
+                email: req.body.email
+            });
+        }
+        const user = userInformation[0];
+        const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+        if (!isPasswordValid) {
+            return res.status(400).render('auth/login', {
+                errors: [{ msg: 'Invalid:  email or password' }],
+                email: req.body.email
+            })
+        }
+        req.session.user = {
+            email: user.email,
+            firstName: user.first_name,
+            lastName: user.last_name
+        };
+        res.redirect('/auth/dashboard');
     } catch (error) {
         logError(`Error during login: ${error.message}`);
-        res.status(500).send('Internal Server Error Occured when loggin you in, check back later')
+        res.status(500).send('Internal Server Error Occurred when signing you in, check back later')
     }
 });
 router.post('/logout', (req, res) => {
 
+});
+router.get('/dashboard', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/auth/login');
+    }
+    const firstName = req.session.user.firstName;
+    res.render('dashboard/index', { firstName });
 });
 module.exports = router
