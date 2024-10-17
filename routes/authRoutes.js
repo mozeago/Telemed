@@ -7,6 +7,7 @@ const { log, logError } = require('../utils/logger');
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 const PNF = require('google-libphonenumber').PhoneNumberFormat;
 const { check, validationResult } = require('express-validator');
+const { render } = require('app');
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
@@ -65,7 +66,27 @@ router.post('/register', [
     }
 });
 router.get('/login', (req, res) => {
+    res.render('auth/login', { errors: [], email: '' });
 
+});
+router.post('/login', [
+    check('email').notEmpty().isEmail().withMessage('Please provide valid email'),
+    check('password').notEmpty().isPassword().withMessage('Please provide your account password')
+], async (req, res) => {
+    const { email, password } = res.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).render('auth/login', {
+            errors: errors.array(),
+            email: res.body.email
+        });
+    }
+    try {
+
+    } catch (error) {
+        logError(`Error during login: ${error.message}`);
+        res.status(500).send('Internal Server Error Occured when loggin you in, check back later')
+    }
 });
 router.post('/logout', (req, res) => {
 
